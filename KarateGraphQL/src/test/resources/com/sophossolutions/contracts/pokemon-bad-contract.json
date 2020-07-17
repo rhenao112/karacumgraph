@@ -1,0 +1,28 @@
+{
+	"data": {
+		"pokemon": {
+			"id": "#string",
+			"number": "#string",
+			"name": "#string",
+			"attacks": {
+				"special": [
+					{
+						"name": "#number",
+						"type": "#array",
+						"damage": "#string"
+					},
+					{
+						"name": "#string",
+						"type": "#string",
+						"damage": "#number"
+					},
+					{
+						"name": "#regex [A-Z][a-z]{3,20}",
+						"type": "#regex [A-Za-z]{4}",
+						"damage": "#number? _ >10"
+					}
+				]
+			}
+		}
+	}
+}

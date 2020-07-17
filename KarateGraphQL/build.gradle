@@ -1,0 +1,57 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+group 'com.sophossolutions'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+    mavenLocal()
+}
+
+buildscript{
+    repositories{
+        mavenLocal()
+        jcenter()
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+sourceSets {
+    test {
+    	java {
+    		srcDir file('src/test/java')
+            exclude '**/*PararellExecution*.java'
+    	}
+        resources {
+            srcDir file('src/test/java')
+            exclude '**/*.java'
+        }
+    }
+}
+
+ext {
+    karateVersion = '0.9.5'
+}
+
+dependencies {
+	compile group: 'com.intuit.karate', name: 'karate-apache', version: "$rootProject.ext.karateVersion"
+    compile group: 'com.intuit.karate', name: 'karate-junit5', version: "$rootProject.ext.karateVersion"
+    compile group: 'com.intuit.karate', name: 'karate-core', version: "$rootProject.ext.karateVersion"
+    compile group: 'net.masterthought', name: 'cucumber-reporting', version: '5.2.2'
+}
+
+test {
+	include '**/*PararellExecution*'
+	include '**/*SingleExecution*'
+	systemProperty "karate.options", System.properties.getProperty("karate.options")
+    systemProperty "karate.env", System.properties.getProperty("karate.env")
+    outputs.upToDateWhen { false }
+    systemProperty "file.encoding", "UTF-8"
+    testLogging.showStandardStreams = true
+}
